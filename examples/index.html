@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Countdown</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
+    <script type="text/javascript" src="../jquery.countdown.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen">
+
+    <script type="text/javascript">
+      $(function() {
+        var endDate = "June 7, 2087 15:03:25";
+        $('.countdown-simple').countdown({ date: endDate });
+        $('.countdown-styled').countdown({
+          date: endDate,
+          render: function(data) {
+            var el = $(this.el);
+            el.empty()
+              .append("<div>" + this.leadingZeros(data.years, 4) + " <span>years</span></div>")
+              .append("<div>" + this.leadingZeros(data.days, 3) + " <span>days</span></div>")
+              .append("<div>" + this.leadingZeros(data.hours, 2) + " <span>hrs</span></div>")
+              .append("<div>" + this.leadingZeros(data.min, 2) + " <span>min</span></div>")
+              .append("<div>" + this.leadingZeros(data.sec, 2) + " <span>sec</span></div>");
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>COUNTDOWN</h1>
+      <h2>Simple text countdown</h2>
+      <div class="countdown-simple"></div>
+      <h2>Styled output</h2>
+      <div class="countdown-styled clearfix"></div>
+    </div>
+  </body>
+</html>
