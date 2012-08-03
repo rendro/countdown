@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>jQuery countdown plugin by rendro</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>jQuery countdown plugin</h1>
+        <p>Simple, lightweight and easy to use jQuery countdown plugin</p>
+
+        <p class="view"><a href="https://github.com/rendro/countdown">View the Project on GitHub <small>rendro/countdown</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/rendro/countdown/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/rendro/countdown/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/rendro/countdown">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>countdown is a jQuery plugin to render countdowns. Instead of unicorns this plugin does not have any magic, but if you like countdowns to be rendered the way you want, this plugin might become your best friend.</p>
+
+<h2>Uber simple setup</h2>
+
+<p>To use the countdown plugin you need to load the current version of jQuery (testet with 1.7.2) and the javascript file of the plugin.
+Just add the following lines to the <code>head</code> of your website:</p>
+
+<pre><code>&lt;script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/path/to/jquery.countdown.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Then you have to initialize the plugin with your desired configuration:</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+$(function() {
+    $('.yourCountdownContainer').countdown({
+        date: "June 7, 2087 15:03:26"
+    });
+});
+&lt;/script&gt;
+</code></pre>
+
+<p>Yep, it's easy like that! Enjoy the time you saved!</p>
+
+<h2>Options</h2>
+
+<p>You can pass a set of these options to set a custom behaviour and look for the plugin.</p>
+
+<table>
+<tr>
+<th>Property (Type)</th>
+        <th>Default</th>
+        <th>Description</th>
+    </tr>
+<tr>
+<td><strong>date</strong></td>
+        <td>new Date("June 7, 2087 15:03:25")</td>
+        <td>The end time of your fancy countdown. Pass either a date object or a string/integer that will be used to create a new Date object. <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date" target="_blank">Here</a> you can find all accepted formats of this value.</td>
+    </tr>
+<tr>
+<td><strong>refresh</strong></td>
+        <td>1000</td>
+        <td>Refresh rate in milliseconds or false to avoid automatic updates.</td>
+    </tr>
+<tr>
+<td><strong>render</strong></td>
+        <td colspan="2">With the render option you can set a function to change the output of the plugin. This function is called in the scope of the plugin, so you can access the <code>leadingZeros</code> method to format numbers as well as public variables and methods. A literal object will be passed to this function as an argument, containing the remaining time parts (years, days, hours, min, sec).</td>
+    </tr>
+</table><h2>Public plugin methods</h2>
+
+<table>
+<tr>
+<th>method(arguments)</th>
+        <th>Description</th>
+    </tr>
+<tr>
+<td>
+<strong>leadingZeros</strong>(<em>number, [length = 2]</em>)</td>
+        <td>Add leading zeros to a number.</td>
+    </tr>
+<tr>
+<td>
+<strong>update</strong>(<em>newDate</em>)</td>
+        <td>Update the end time. The possible formats of the argument <code>newDate</code> are the same as described in the <code>date</code>-option above.</td>
+    </tr>
+<tr>
+<td>
+<strong>render</strong>()</td>
+        <td>Call the render method. This might be usefull if you set <code>refresh</code> to false.</td>
+    </tr>
+<tr>
+<td>
+<strong>stop</strong>()</td>
+        <td>Stops the refresh loop.</td>
+    </tr>
+<tr>
+<td>
+<strong>start</strong>(<em>[refreshRate]</em>)</td>
+        <td>Start the refresh loop. If you set a refresh rate in the options you can overwrite it with the argument <code>refreshRate</code>. If you don't pass an argument, the old value or the default value of 1 sec will be used.</td>
+    </tr>
+</table>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/rendro">rendro</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
