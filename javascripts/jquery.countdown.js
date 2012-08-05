@@ -100,6 +100,7 @@ and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
         if (_this.interval) {
           clearInterval(_this.interval);
         }
+        _this.render();
         _this.options.refresh = refresh;
         _this.interval = setInterval(function() {
           return _this.render();
