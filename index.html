@@ -20,7 +20,6 @@
 
         <p class="view"><a href="https://github.com/rendro/countdown">View the Project on GitHub <small>rendro/countdown</small></a></p>
 
-
         <ul>
           <li><a href="https://github.com/rendro/countdown/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/rendro/countdown/tarball/master">Download <strong>TAR Ball</strong></a></li>
@@ -29,6 +28,13 @@
       </header>
       <section>
         <p>countdown is a jQuery plugin to render countdowns. Instead of unicorns this plugin does not have any magic, but if you like countdowns to be rendered the way you want, this plugin might become your best friend.</p>
+
+        <h2>Demo</h2>
+        <div class="countdown-styled"></div>
+        <p>
+          <a href="#" class="stop">Stop countdown</a> |
+          <a href="#" class="start">Start countdown</a>
+        </p>
 
 <h2>Uber simple setup</h2>
 
@@ -116,6 +122,34 @@ $(function() {
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="javascripts/jquery.countdown.js"></script>
+    <script type="text/javascript">
+    $(function() {
+      $('.countdown-styled').countdown({
+        render: function(data) {
+          var el = $(this.el);
+          el.empty()
+            .append("<div>" + this.leadingZeros(data.years, 4) + " <span>years</span></div>")
+            .append("<div>" + this.leadingZeros(data.days, 3) + " <span>days</span></div>")
+            .append("<div>" + this.leadingZeros(data.hours, 2) + " <span>hrs</span></div>")
+            .append("<div>" + this.leadingZeros(data.min, 2) + " <span>min</span></div>")
+            .append("<div>" + this.leadingZeros(data.sec, 2) + " <span>sec</span></div>");
+        }
+      });
+
+      $('.stop').on('click', function(e) {
+        e.preventDefault();
+        $('.countdown-styled').data('countdown').stop();
+      });
+
+      $('.start').on('click', function(e) {
+        e.preventDefault();
+        $('.countdown-styled').data('countdown').start();
+      });
+    });
+    </script>
+
+
   </body>
 </html>
