@@ -82,6 +82,7 @@ and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
 
     @start = (refresh = @options.refresh or $.countdown.defaultOptions.refresh) =>
       clearInterval @interval if @interval
+      @render()
       @options.refresh = refresh
       @interval = setInterval =>
         @render()
