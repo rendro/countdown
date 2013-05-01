@@ -29,12 +29,15 @@
       <section>
         <p>countdown is a jQuery plugin to render countdowns. Instead of unicorns this plugin does not have any magic, but if you like countdowns to be rendered the way you want, this plugin might become your best friend.</p>
 
-        <h2>Demo</h2>
+        <h2>Demos</h2>
         <div class="countdown-styled"></div>
         <p>
           <a href="#" class="stop">Stop countdown</a> |
           <a href="#" class="start">Start countdown</a>
         </p>
+
+        <p>Click on the box to reset the countdown to 10sec.</p>
+        <div class="countdown-callback"></div>
 
 <h2>Uber simple setup</h2>
 
@@ -147,6 +150,19 @@ $(function() {
         e.preventDefault();
         $('.countdown-styled').data('countdown').start();
       });
+
+      $('.countdown-callback').countdown({
+        date: +(new Date) + 10000,
+        render: function(data) {
+          $(this.el).text(this.leadingZeros(data.sec, 2) + " sec");
+        },
+        onEnd: function() {
+          $(this.el).addClass('ended');
+        }
+      }).on("click", function() {
+        $(this).removeClass('ended').data('countdown').update(+(new Date) + 10000).start();
+      });
+
     });
     </script>
 
