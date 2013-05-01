@@ -11,29 +11,44 @@
     <script type="text/javascript">
       $(function() {
         var endDate = "June 7, 2087 15:03:25";
-        $('.countdown-simple').countdown({ date: endDate });
-        $('.countdown-styled').countdown({
+
+        $('.countdown.simple').countdown({ date: endDate });
+
+        $('.countdown.styled').countdown({
           date: endDate,
           render: function(data) {
-            var el = $(this.el);
-            el.empty()
-              .append("<div>" + this.leadingZeros(data.years, 4) + " <span>years</span></div>")
-              .append("<div>" + this.leadingZeros(data.days, 3) + " <span>days</span></div>")
-              .append("<div>" + this.leadingZeros(data.hours, 2) + " <span>hrs</span></div>")
-              .append("<div>" + this.leadingZeros(data.min, 2) + " <span>min</span></div>")
-              .append("<div>" + this.leadingZeros(data.sec, 2) + " <span>sec</span></div>");
+            $(this.el).html("<div>" + this.leadingZeros(data.years, 4) + " <span>years</span></div><div>" + this.leadingZeros(data.days, 3) + " <span>days</span></div><div>" + this.leadingZeros(data.hours, 2) + " <span>hrs</span></div><div>" + this.leadingZeros(data.min, 2) + " <span>min</span></div><div>" + this.leadingZeros(data.sec, 2) + " <span>sec</span></div>");
           }
         });
+
+        $('.countdown.callback').countdown({
+          date: +(new Date) + 10000,
+          render: function(data) {
+            $(this.el).text(this.leadingZeros(data.sec, 2) + " sec");
+          },
+          onEnd: function() {
+            $(this.el).addClass('ended');
+          }
+        }).on("click", function() {
+          $(this).removeClass('ended').data('countdown').update(+(new Date) + 10000).start();
+        });
+
       });
     </script>
   </head>
   <body>
     <div class="container">
       <h1>COUNTDOWN</h1>
+
       <h2>Simple text countdown</h2>
-      <div class="countdown-simple"></div>
+      <div class="countdown simple"></div>
+
       <h2>Styled output</h2>
-      <div class="countdown-styled clearfix"></div>
+      <div class="countdown styled"></div>
+
+      <h2>Countdown with callback</h2>
+      <p>Click on the green box to reset the counter to 10 sec.</p>
+      <div class="countdown callback"></div>
     </div>
   </body>
 </html>
