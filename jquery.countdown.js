@@ -40,7 +40,7 @@ and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
           if (_this.interval) {
             _this.stop();
           }
-          _this.options.onEnd();
+          _this.options.onEnd.apply(_this);
         }
         dateData = {
           years: 0,

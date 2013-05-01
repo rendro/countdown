@@ -32,7 +32,7 @@ and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
       if diff <= 0
         diff = 0
         @stop() if @interval
-        @options.onEnd()
+        @options.onEnd.apply @
 
       dateData = {
         years:    0
