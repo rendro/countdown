@@ -1,10 +1,8 @@
-countdown
-==============
+# countdown
 
 countdown is a jQuery plugin to render countdowns. Instead of unicorns this plugin does not have any magic, but if you like countdowns to be rendered the way you want, this plugin might become your best friend.
 
-Uber simple setup
------------------
+## Uber simple setup
 
 To use the countdown plugin you need to load the current version of jQuery (testet with 1.7.2) and the javascript file of the plugin.
 Just add the following lines to the `head` of your website:
@@ -24,8 +22,7 @@ Then you have to initialize the plugin with your desired configuration:
 
 Yep, it's easy like that! Enjoy the time you saved!
 
-Options
--------
+## Options
 
 You can pass a set of these options to set a custom behaviour and look for the plugin.
 
@@ -49,11 +46,14 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td><strong>render</strong></td>
         <td colspan="2">With the render option you can set a function to change the output of the plugin. This function is called in the scope of the plugin, so you can access the <code>leadingZeros</code> method to format numbers as well as public variables and methods. A literal object will be passed to this function as an argument, containing the remaining time parts (years, days, hours, min, sec).</td>
     </tr>
+    <tr>
+    	<td><strong>onEnd</strong></td>
+        <td colspan="2">Callback function that is called when the end date is reached</td>
+    </tr>
 </table>
 
 
-Public plugin methods
----------------------
+## Public plugin methods
 
 <table>
     <tr>
@@ -82,3 +82,10 @@ Public plugin methods
     </tr>
 </table>
 
+## Changelog
+
+### Version 1.0.1 - <small>May 01, 2013</small>
+* Added callback function when the end date is reached
+
+### Version 1.0.0 - <small>Aug 05, 2012</small>
+* Initial release

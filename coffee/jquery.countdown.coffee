@@ -6,7 +6,7 @@ and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
 
 @source: http://github.com/rendro/countdown/
 @autor: Robert Fleischmann
-@version: 1.0.0
+@version: 1.0.1
 ###
 
 (($) ->
@@ -29,9 +29,10 @@ and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
       endDate = Date.parse if $.isPlainObject @options.date then @options.date else new Date @options.date
       diff = (endDate - Date.parse(new Date)) / 1000
 
-      if diff < 0
+      if diff <= 0
         diff = 0
         @stop() if @interval
+        @options.onEnd()
 
       dateData = {
         years:    0
@@ -94,6 +95,7 @@ and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
   $.countdown.defaultOptions =
     date: "June 7, 2087 15:03:25"
     refresh: 1000
+    onEnd: $.noop
     render: (date) ->
       $(@el).html "#{date.years} years, #{date.days} days, #{@leadingZeros date.hours} hours, #{@leadingZeros date.min} min and #{@leadingZeros date.sec} sec"
 
