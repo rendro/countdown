@@ -89,3 +89,7 @@ You can pass a set of these options to set a custom behaviour and look for the p
 
 ### Version 1.0.0 - <small>Aug 05, 2012</small>
 * Initial release
+
+## License
+
+`countdown` is dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL-3.0 (http://opensource.org/licenses/GPL-3.0) licenses.

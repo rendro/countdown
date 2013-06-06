@@ -2,7 +2,7 @@
 countdown is a simple jquery plugin for countdowns
 
 Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
-and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
+and GPL-3.0 (http://opensource.org/licenses/GPL-3.0) licenses.
 
 @source: http://github.com/rendro/countdown/
 @autor: Robert Fleischmann
