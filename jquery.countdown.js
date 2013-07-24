@@ -83,6 +83,13 @@ and GPL-3.0 (http://opensource.org/licenses/GPL-3.0) licenses.
         _this.options.date = newDate;
         return _this;
       };
+      this.isPlural = function(number, single_string) {
+        if(number > 1) {
+          return single_string + "s";
+        } else {
+          return single_string;
+        }
+      };
       this.render = function() {
         _this.options.render.apply(_this, [getDateData(_this.options.date)]);
         return _this;
@@ -115,7 +122,11 @@ and GPL-3.0 (http://opensource.org/licenses/GPL-3.0) licenses.
       refresh: 1000,
       onEnd: $.noop,
       render: function(date) {
-        return $(this.el).html("" + date.years + " years, " + date.days + " days, " + (this.leadingZeros(date.hours)) + " hours, " + (this.leadingZeros(date.min)) + " min and " + (this.leadingZeros(date.sec)) + " sec");
+        var days = this.isPlural(date.days, "day");
+        var years = this.isPlural(date.years, "year");
+        var min = this.isPlural(date.min, "min");
+        var hours = this.isPlural(date.hours, "hour");
+        return $(this.el).html("" + date.years + " " + years + ", " + date.days + " "+ days +", " + (this.leadingZeros(date.hours)) + " " + hours + ", " + (this.leadingZeros(date.min)) + " " + min + " and " + (this.leadingZeros(date.sec)) + " sec");
       }
     };
     $.fn.countdown = function(options) {
