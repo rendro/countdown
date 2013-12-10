@@ -27,7 +27,7 @@ and GPL-3.0 (http://opensource.org/licenses/GPL-3.0) licenses.
 
     getDateData = (endDate) =>
       endDate = Date.parse if $.isPlainObject @options.date then @options.date else new Date @options.date
-      diff = (endDate - Date.parse(new Date)) / 1000
+      diff = (endDate - Date.parse(new Date) + @options.offset) / 1000
 
       if diff <= 0
         diff = 0
@@ -72,6 +72,10 @@ and GPL-3.0 (http://opensource.org/licenses/GPL-3.0) licenses.
       @options.date = newDate
       @
 
+    @updateOffset = (newOffset) =>
+      @options.offset = newOffset
+      @
+
     @render = =>
       @options.render.apply @, [getDateData @options.date]
       @
@@ -96,6 +100,7 @@ and GPL-3.0 (http://opensource.org/licenses/GPL-3.0) licenses.
     date: "June 7, 2087 15:03:25"
     refresh: 1000
     onEnd: $.noop
+    offset: 0
     render: (date) ->
       $(@el).html "#{date.years} years, #{date.days} days, #{@leadingZeros date.hours} hours, #{@leadingZeros date.min} min and #{@leadingZeros date.sec} sec"
 

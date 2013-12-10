@@ -4,7 +4,7 @@ countdown is a jQuery plugin to render countdowns. Instead of unicorns this plug
 
 ## Uber simple setup
 
-To use the countdown plugin you need to load the current version of jQuery (testet with 1.7.2) and the javascript file of the plugin.
+To use the countdown plugin you need to load the current version of jQuery (tested with 1.7.2) and the javascript file of the plugin.
 Just add the following lines to the `head` of your website:
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -50,6 +50,10 @@ You can pass a set of these options to set a custom behaviour and look for the p
     	<td><strong>onEnd</strong></td>
         <td colspan="2">Callback function that is called when the end date is reached</td>
     </tr>
+    <tr>
+    	<td><strong>offset</strong></td>
+        <td colspan="2">A period of time (in milliseconds) that is used as offset in time difference calculation between <em>now</em> and <em>end time</em>. Useful if countdown calculation to <em>end time</em> is imprecise due to user's date and time settings.</td>
+    </tr>
 </table>
 
 
@@ -67,6 +71,10 @@ You can pass a set of these options to set a custom behaviour and look for the p
     <tr>
         <td><strong>update</strong>(<em>newDate</em>)</td>
         <td>Update the end time. The possible formats of the argument <code>newDate</code> are the same as described in the <code>date</code>-option above.</td>
+    </tr>
+    <tr>
+        <td><strong>updateOffset</strong>(<em>newOffset</em>)</td>
+        <td>Update the offset (time in milliseconds).</td>
     </tr>
     <tr>
         <td><strong>render</strong>()</td>
