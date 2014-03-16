@@ -7,18 +7,22 @@ countdown is a jQuery plugin to render countdowns. Instead of unicorns this plug
 To use the countdown plugin you need to load the current version of jQuery (testet with 1.7.2) and the javascript file of the plugin.
 Just add the following lines to the `head` of your website:
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/path/to/jquery.countdown.js"></script>
+```html
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/path/to/jquery.countdown.js"></script>
+```
 
 Then you have to initialize the plugin with your desired configuration:
 
-    <script type="text/javascript">
-    $(function() {
-        $('.yourCountdownContainer').countdown({
-            date: "June 7, 2087 15:03:26"
-        });
+```html
+<script type="text/javascript">
+$(function() {
+    $('.yourCountdownContainer').countdown({
+        date: "June 7, 2087 15:03:26"
     });
-    </script>
+});
+</script>
+```
 
 Yep, it's easy like that! Enjoy the time you saved!
 
@@ -26,6 +30,7 @@ Yep, it's easy like that! Enjoy the time you saved!
 
 You can pass a set of these options to set a custom behaviour and look for the plugin.
 
+```html
 <table>
     <tr>
         <th>Property (Type)</th>
@@ -51,10 +56,11 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td colspan="2">Callback function that is called when the end date is reached</td>
     </tr>
 </table>
-
+```
 
 ## Public plugin methods
 
+```html
 <table>
     <tr>
         <th>method(arguments)</th>
@@ -81,6 +87,7 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td>Start the refresh loop. If you set a refresh rate in the options you can overwrite it with the argument <code>refreshRate</code>. If you don't pass an argument, the old value or the default value of 1 sec will be used.</td>
     </tr>
 </table>
+```
 
 ## Changelog
 
