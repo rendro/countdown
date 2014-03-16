@@ -14,14 +14,12 @@ Just add the following lines to the `head` of your website:
 
 Then you have to initialize the plugin with your desired configuration:
 
-```html
-<script type="text/javascript">
+```js
 $(function() {
     $('.yourCountdownContainer').countdown({
         date: "June 7, 2087 15:03:26"
     });
 });
-</script>
 ```
 
 Yep, it's easy like that! Enjoy the time you saved!
