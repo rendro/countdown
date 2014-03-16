@@ -30,7 +30,6 @@ Yep, it's easy like that! Enjoy the time you saved!
 
 You can pass a set of these options to set a custom behaviour and look for the plugin.
 
-```html
 <table>
     <tr>
         <th>Property (Type)</th>
@@ -56,11 +55,9 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td colspan="2">Callback function that is called when the end date is reached</td>
     </tr>
 </table>
-```
 
 ## Public plugin methods
 
-```html
 <table>
     <tr>
         <th>method(arguments)</th>
@@ -87,7 +84,6 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td>Start the refresh loop. If you set a refresh rate in the options you can overwrite it with the argument <code>refreshRate</code>. If you don't pass an argument, the old value or the default value of 1 sec will be used.</td>
     </tr>
 </table>
-```
 
 ## Changelog
 
