@@ -7,18 +7,20 @@ countdown is a jQuery plugin to render countdowns. Instead of unicorns this plug
 To use the countdown plugin you need to load the current version of jQuery (testet with 1.7.2) and the javascript file of the plugin.
 Just add the following lines to the `head` of your website:
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/path/to/jquery.countdown.js"></script>
+```html
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/path/to/jquery.countdown.js"></script>
+```
 
 Then you have to initialize the plugin with your desired configuration:
 
-    <script type="text/javascript">
-    $(function() {
-        $('.yourCountdownContainer').countdown({
-            date: "June 7, 2087 15:03:26"
-        });
+```js
+$(function() {
+    $('.yourCountdownContainer').countdown({
+        date: "June 7, 2087 15:03:26"
     });
-    </script>
+});
+```
 
 Yep, it's easy like that! Enjoy the time you saved!
 
@@ -51,7 +53,6 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td colspan="2">Callback function that is called when the end date is reached</td>
     </tr>
 </table>
-
 
 ## Public plugin methods
 
