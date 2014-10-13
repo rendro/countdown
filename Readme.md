@@ -93,11 +93,14 @@ You can pass a set of these options to set a custom behaviour and look for the p
 
 ## Changelog
 
+### Version 2.1.0 - <small>Oct 13, 2014</small>
+* Added time offset option to fix time differences between server and client time (#8)
+
 ### Version 2.0.0 - <small>Oct 13, 2014</small>
 * removed coffee-script dependency
 * added vanilla version
 * add UMD wrapper (commonJS, require.js, global)
-* added support to define the end date with the data-date attribute #14
+* added support to define the end date with the data-date attribute (#14)
 
 ### Version 1.0.1 - <small>May 01, 2013</small>
 * Added callback function when the end date is reached

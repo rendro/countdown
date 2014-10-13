@@ -1,6 +1,7 @@
 var defaultOptions = {
   date: "June 7, 2087 15:03:25",
   refresh: 1000,
+  offset: 0,
   onEnd: function() {
     return;
   },
@@ -59,7 +60,7 @@ var Countdown = function(el, options) {
    * @return {Object} Object with the diff information (years, days, hours, min, sec, millisec)
    */
   this.getDiffDate = function() {
-    var diff = (this.options.date.getTime() - Date.now()) / 1000;
+    var diff = (this.options.date.getTime() - Date.now() + this.options.offset) / 1000;
 
     var dateData = {
       years:    0,
@@ -169,6 +170,16 @@ var Countdown = function(el, options) {
       this.interval = setInterval(this.render, this.options.refresh);
     }
 
+    return this;
+  }.bind(this);
+
+  /**
+   * Update the offset
+   * @param  {Number}    offset New offset in ms
+   * @return {Countdown}        Countdown instance
+   */
+  this.updateOffset = function(offset) {
+    this.options.offset = offset;
     return this;
   }.bind(this);
 
