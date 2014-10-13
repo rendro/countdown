@@ -1,0 +1,43 @@
+{
+  "name": "easy-countdown",
+  "version": "2.0.0",
+  "description": "Simple, lightweight and easy to use countdown plugin",
+  "main": "src/countdown.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "npm run build-vanilla && npm run minify-vanilla && npm run build-jquery && npm run minify-jquery",
+    "build-vanilla": "browserify -s Countdown -e src/countdown.js -o dest/countdown.js",
+    "build-jquery": "browserify -s Countdown -e src/jquery-wrapper.js -o dest/jquery.countdown.js",
+    "minify-vanilla": "uglifyjs dest/countdown.js > dest/countdown.min.js",
+    "minify-jquery": "uglifyjs dest/jquery.countdown.js > dest/jquery.countdown.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rendro/countdown.git"
+  },
+  "keywords": [
+    "countdown",
+    "timer",
+    "jQuery",
+    "plugin"
+  ],
+  "author": "Robert Fleischmann <me@robert-fleischmann.de>",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    },
+    {
+      "type": "GPL",
+      "url": "http://www.opensource.org/licenses/gpl-license.php"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/rendro/countdown/issues"
+  },
+  "homepage": "https://github.com/rendro/countdown",
+  "devDependencies": {
+    "browserify": "6.0.3",
+    "uglify-js": "2.4.15"
+  }
+}
