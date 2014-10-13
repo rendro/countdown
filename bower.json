@@ -1,0 +1,21 @@
+{
+  "name": "countdown",
+  "version": "2.0.0",
+  "description": "Simple, lightweight and easy to use countdown plugin",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    },
+    {
+      "type": "GPL",
+      "url": "http://www.opensource.org/licenses/gpl-license.php"
+    }
+  ],
+  "ignore": [
+    "examples/*"
+  ],
+  "dependencies": {
+    "jQuery": ">=1.7.2"
+  }
+}
