@@ -49,7 +49,7 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td colspan="2">With the render option you can set a function to change the output of the plugin. This function is called in the scope of the plugin, so you can access the <code>leadingZeros</code> method to format numbers as well as public variables and methods. A literal object will be passed to this function as an argument, containing the remaining time parts (years, days, hours, min, sec).</td>
     </tr>
     <tr>
-    	<td><strong>onEnd</strong></td>
+        <td><strong>onEnd</strong></td>
         <td colspan="2">Callback function that is called when the end date is reached</td>
     </tr>
 </table>
@@ -84,6 +84,12 @@ You can pass a set of these options to set a custom behaviour and look for the p
 </table>
 
 ## Changelog
+
+### Version 2.0.0 - <small>Oct 13, 2014</small>
+* removed coffee-script dependency
+* added vanilla version
+* add UMD wrapper (commonJS, require.js, global)
+* added support to define the end date with the data-date attribute #14
 
 ### Version 1.0.1 - <small>May 01, 2013</small>
 * Added callback function when the end date is reached
