@@ -17,5 +17,8 @@
   ],
   "dependencies": {
     "jQuery": "^1.7.2"
-  }
+  },
+  "main": [
+    "src/countdown.js"
+  ]
 }
