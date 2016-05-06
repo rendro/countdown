@@ -41,20 +41,28 @@ var Countdown = function(el, options) {
   this.interval = false;
 
   // merge default options and options into this.options
-  for (var i in defaultOptions) {
-    if (defaultOptions.hasOwnProperty(i)) {
-      this.options[i] = typeof options[i] !== 'undefined' ? options[i] : defaultOptions[i];
+  this.mergeOptions = function(options) {
+    for (var i in defaultOptions) {
+      if (defaultOptions.hasOwnProperty(i)) {
+        this.options[i] = typeof options[i] !== 'undefined' ? options[i] : defaultOptions[i];
 
-      if (i === 'date' && typeof this.options.date !== 'object') {
-        this.options.date = new Date(this.options.date);
-      }
+        if (i === 'date' && typeof this.options.date !== 'object') {
+          this.options.date = new Date(this.options.date);
+        }
 
-      // bind context for functions
-      if (typeof this.options[i] === 'function') {
-        this.options[i] = this.options[i].bind(this);
+        // bind context for functions
+        if (typeof this.options[i] === 'function') {
+          this.options[i] = this.options[i].bind(this);
+        }
       }
     }
-  }
+    if (typeof this.options.date !== 'object') {
+      this.options.date = new Date(this.options.date);
+    }
+  }.bind(this);
+
+  this.mergeOptions(options);
+  
 
   /**
    * Get the difference between now and the end date
@@ -181,6 +189,17 @@ var Countdown = function(el, options) {
    */
   this.updateOffset = function(offset) {
     this.options.offset = offset;
+    return this;
+  }.bind(this);
+
+
+  /**
+   * Restart the countdown and update options
+   */
+  this.restart = function (options) {
+    this.mergeOptions(options);
+    this.interval = false;
+    this.start();
     return this;
   }.bind(this);
 

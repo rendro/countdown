@@ -89,9 +89,17 @@ You can pass a set of these options to set a custom behaviour and look for the p
         <td><strong>start</strong>(<em>[refreshRate]</em>)</td>
         <td>Start the refresh loop. If you set a refresh rate in the options you can overwrite it with the argument <code>refreshRate</code>. If you don't pass an argument, the old value or the default value of 1 sec will be used.</td>
     </tr>
+    <tr>
+        <td><strong>restart</strong>(<em>options</em>)</td>
+        <td>Update the options and restart the countdown</td>
+    </tr>
 </table>
 
 ## Changelog
+
+### Version 2.2.0 - <small>May 6, 2016</small>
+* added restart countdown api method (Thanks @scazzy)
+* Fixed bower dependencies and main field
 
 ### Version 2.1.0 - <small>Oct 13, 2014</small>
 * Added time offset option to fix time differences between server and client time (#8)
