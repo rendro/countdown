@@ -3,6 +3,7 @@ var defaultOptions = {
   date: "June 7, 2087 15:03:25",
   refresh: 1000,
   offset: 0,
+  utc: 0,
   onEnd: function() {
     return;
   },
@@ -69,7 +70,15 @@ var Countdown = function(el, options) {
    * @return {Object} Object with the diff information (years, days, hours, min, sec, millisec)
    */
   this.getDiffDate = function() {
-    var diff = (this.options.date.getTime() - Date.now() + this.options.offset) / 1000;
+    var new_d = new Date();
+    var localTime = new_d.getTime();
+    var localOffset = new_d.getTimezoneOffset() * 60000;
+    var utc = localTime + localOffset;
+    var offset = this.options.utc;
+    var calc_utc = utc + (3600000*offset);
+    var converted_utc = new Date(calc_utc);
+
+    var diff = (this.options.date.getTime() - converted_utc + this.options.offset) / 1000;
 
     var dateData = {
       years:    0,
