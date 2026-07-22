@@ -1,5 +1,34 @@
 # Changelog
 
+## Version 3.1.0
+
+Fixes found by an adversarial audit of 3.0.1.
+
+### Fixed
+* `start()` was a silent no-op once the countdown had ended, so pushing the
+  target back into the future with `updateOffset()` rendered a live value once
+  and then froze forever. Only `update()` cleared the finished flag. `start()`
+  now revives the countdown when there is time on the clock again.
+* The jQuery plugin read `data-date` only when creating an instance, so a second
+  call over the same selection silently inverted the documented precedence. The
+  "re-initialise after new content" pattern the readme encourages therefore
+  overwrote each element's own date with the shared one.
+* A countdown started through the jQuery plugin leaked its interval when the
+  element was removed. `$(el).remove()`, `.empty()` and `.html()` run jQuery's
+  `cleanData`, which dropped the data entry without stopping the timer, leaving
+  it writing into a detached node with no way to reach the instance. The plugin
+  now destroys instances during `cleanData`.
+* `leadingZeros(num, length, fractionDigits)` rounded with `toFixed`, so
+  59.999 seconds rendered as `60.00` — the impossible value that flooring in
+  `getDiffDate` exists to prevent. It truncates now. The readme's own decimal
+  example was affected.
+* `leadingZeros` padded in front of the minus sign, so `-5` at length 3 gave
+  `0-5`. The sign now sits outside the padding.
+* `toDate()` returned the caller's own `Date`, so mutating it afterwards moved
+  the countdown's target.
+* `easy-countdown/jquery` is resolvable for TypeScript consumers on
+  `moduleResolution: "node"` via `typesVersions`.
+
 ## Version 3.0.1
 
 Compatibility fixes for two things 3.0.0 broke relative to 2.2.0. If you are on

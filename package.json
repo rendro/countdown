@@ -9,7 +9,7 @@
     "plugin"
   ],
   "license": "MIT",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "author": {
     "name": "Robert Fleischmann",
     "email": "rendro87@gmail.com",
@@ -78,5 +78,12 @@
     "typescript": "^5.6.3",
     "vite": "^7.3.6",
     "vitest": "^3.2.7"
+  },
+  "typesVersions": {
+    "*": {
+      "jquery": [
+        "./dist/jquery.d.ts"
+      ]
+    }
   }
 }

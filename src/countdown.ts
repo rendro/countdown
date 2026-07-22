@@ -49,7 +49,9 @@ export const defaultOptions: TOptions = {
  * countdown.
  */
 export function toDate(value: TDateInput): Date {
-  const date = value instanceof Date ? value : new Date(value);
+  // copy: returning the caller's Date let a later setDate() on their object
+  // silently move the target
+  const date = value instanceof Date ? new Date(value.getTime()) : new Date(value);
   if (Number.isNaN(date.getTime())) {
     throw new TypeError(
       `countdown: invalid date ${JSON.stringify(value)}. ` +
@@ -170,9 +172,17 @@ export class Countdown {
    * ```
    */
   leadingZeros(num: number, length = 2, fractionDigits = 0): string {
-    const text = fractionDigits > 0 ? num.toFixed(fractionDigits) : String(num);
-    const [integer, fraction] = text.split('.');
-    const padded = integer.padStart(length, '0');
+    // truncate rather than round: toFixed would turn 59.999 into "60.00",
+    // reintroducing the impossible value that flooring in getDiffDate removes
+    const factor = 10 ** fractionDigits;
+    const truncated = Math.trunc(num * factor) / factor;
+    const text =
+      fractionDigits > 0 ? truncated.toFixed(fractionDigits) : String(truncated);
+
+    const negative = text.startsWith('-');
+    const [integer, fraction] = (negative ? text.slice(1) : text).split('.');
+    // pad inside the sign, so -5 at length 3 is "-05" and not "0-5"
+    const padded = (negative ? '-' : '') + integer.padStart(length, '0');
     return fraction === undefined ? padded : `${padded}.${fraction}`;
   }
 
@@ -198,6 +208,12 @@ export class Countdown {
   start(): this {
     if (this.running) {
       return this;
+    }
+
+    // if time is on the clock again, whether from update() or updateOffset(),
+    // this is a fresh run. Without this, start() rendered once and froze.
+    if (this.ended && this.getDiffDate().total > 0) {
+      this.ended = false;
     }
 
     // set the interval before the first render, so a countdown that is already

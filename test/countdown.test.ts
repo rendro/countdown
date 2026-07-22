@@ -82,10 +82,22 @@ describe('Countdown', () => {
       ).toThrow(/invalid date/);
     });
 
-    it('passes valid values through untouched', () => {
+    it('preserves the instant, but copies the Date', () => {
       const d = inFuture(DAY);
-      expect(toDate(d)).toBe(d);
+      expect(toDate(d).getTime()).toBe(d.getTime());
       expect(toDate(d.toISOString()).getTime()).toBe(d.getTime());
+      // a copy, so mutating the caller's Date cannot move the target
+      expect(toDate(d)).not.toBe(d);
+    });
+
+    it('is not affected by the caller mutating their Date afterwards', () => {
+      const d = inFuture(DAY);
+      const c = new Countdown(createEl(), { date: d, refresh: 0 });
+      const before = c.getDiffDate().total;
+
+      d.setFullYear(d.getFullYear() + 5);
+
+      expect(c.getDiffDate().total).toBe(before);
     });
   });
 
@@ -529,8 +541,19 @@ describe('Countdown', () => {
         expect(chart().leadingZeros(7.5, 4, 1)).toBe('0007.5');
       });
 
-      it('rounds to the requested precision', () => {
-        expect(chart().leadingZeros(9.999, 2, 2)).toBe('10.00');
+      it('truncates rather than rounds, so a unit can never overflow', () => {
+        // rounding turned 59.999 seconds into "60.00", the impossible value
+        // that flooring in getDiffDate exists to prevent
+        expect(chart().leadingZeros(9.999, 2, 2)).toBe('09.99');
+        expect(chart().leadingZeros(59.999, 2, 2)).toBe('59.99');
+      });
+
+      // `length` counts digits and the sign sits outside them. The bug worth
+      // fixing was padding in front of the minus, which gave "0-5".
+      it('pads inside the sign for negative numbers', () => {
+        expect(chart().leadingZeros(-5, 3)).toBe('-005');
+        expect(chart().leadingZeros(-5, 2)).toBe('-05');
+        expect(chart().leadingZeros(-5.5, 2, 2)).toBe('-05.50');
       });
 
       it('is unchanged when fractionDigits is omitted or zero', () => {
