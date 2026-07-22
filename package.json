@@ -9,7 +9,7 @@
     "plugin"
   ],
   "license": "MIT",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": {
     "name": "Robert Fleischmann",
     "email": "rendro87@gmail.com",
@@ -39,12 +39,24 @@
         "types": "./types/jquery.d.cts",
         "default": "./dist/jquery.countdown.cjs"
       }
-    }
+    },
+    "./package.json": "./package.json",
+    "./dist/countdown.js": "./dist/countdown.cjs",
+    "./dist/jquery.countdown.js": "./dist/jquery.countdown.cjs",
+    "./dist/countdown.min.js": "./dist/countdown.min.cjs",
+    "./dist/jquery.countdown.min.js": "./dist/jquery.countdown.min.cjs",
+    "./dest/countdown.js": "./dist/countdown.cjs",
+    "./dest/jquery.countdown.js": "./dist/jquery.countdown.cjs",
+    "./dest/countdown.min.js": "./dist/countdown.min.cjs",
+    "./dest/jquery.countdown.min.js": "./dist/jquery.countdown.min.cjs",
+    "./dist/*": "./dist/*",
+    "./dest/*": "./dest/*"
   },
   "files": [
     "dist",
     "src",
-    "types"
+    "types",
+    "dest"
   ],
   "repository": {
     "type": "git",
@@ -55,7 +67,7 @@
   },
   "homepage": "https://github.com/rendro/countdown",
   "scripts": {
-    "build": "vite build && vite build --mode umd && vite build --mode umd-min && vite build --mode jquery && vite build --mode jquery-umd && vite build --mode jquery-umd-min && tsc",
+    "build": "vite build && vite build --mode umd && vite build --mode umd-min && vite build --mode jquery && vite build --mode jquery-umd && vite build --mode jquery-umd-min && node scripts/alias-dist.mjs && tsc",
     "typecheck": "tsc -p tsconfig.check.json",
     "test": "vitest run",
     "verify:package": "./scripts/verify-package.sh",

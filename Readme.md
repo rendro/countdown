@@ -71,8 +71,9 @@ import $ from 'jquery';
 registerJQueryPlugin($);
 ```
 
-The date can also come from the element, and is used when no `date` option is
-passed:
+The date can also come from the element. It wins over the `date` option, so one
+call can configure many elements with their own dates — the same ordering 2.x
+used:
 
 ```html
 <div class="countdown" data-date="2087-06-07T15:03:25Z"></div>
@@ -171,6 +172,8 @@ Run `npm run build`, then open `examples/index.html` in a browser.
 - Invalid dates throw instead of rendering zeros.
 - `leadingZeros` gained a third argument for decimal places.
 - New: `destroy()`, `finished`, `running`, and TypeScript types.
+- The build output moved to `dist/`. The 2.x `dest/` filenames are still
+  published as copies, so existing CDN and `<script src>` URLs keep working.
 
 ### Fixed in 3.0
 

@@ -1,5 +1,24 @@
 # Changelog
 
+## Version 3.0.1
+
+Compatibility fixes for two things 3.0.0 broke relative to 2.2.0. If you are on
+3.0.0, upgrade.
+
+### Fixed
+* `data-date` lost to the `date` option in the jQuery plugin. 2.x did
+  `if ($el.data('date')) { options.date = $el.data('date'); }`, so the
+  attribute won — which is what lets one call configure many elements with
+  their own dates. 3.0.0 reversed it, so a shared `date` silently overrode
+  every element's attribute. Unlike 2.x the caller's options object is no
+  longer mutated, which used to leak the first element's date onto later ones.
+* The 2.x `dest/` filenames are published again. 3.0.0 built to `dist/` only,
+  which 404s every unpkg / jsDelivr URL and `<script src>` written against
+  2.x. `dest/countdown.js`, `dest/countdown.min.js` and the jQuery pair are
+  copies of the UMD bundles, and the legacy paths are mapped in `exports` onto
+  CommonJS twins so Node deep-requires resolve rather than being parsed as ESM.
+* `./package.json` is exported, which some bundlers and test resolvers read.
+
 ## Version 3.0.0
 
 Rewritten in TypeScript; built with Vite, tested with Vitest. The

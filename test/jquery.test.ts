@@ -101,7 +101,8 @@ describe('jQuery plugin', () => {
     expect(c.getDiffDate().days).toBe(2);
   });
 
-  it('lets an explicit date win over data-date', () => {
+  it('lets data-date win over an explicit date', () => {
+    // matches 2.x: if ($el.data('date')) { options.date = $el.data('date'); }
     const { jq, select } = createFakeJQuery();
     registerJQueryPlugin(jq);
     el.setAttribute('data-date', inFuture(2 * DAY).toISOString());
@@ -109,7 +110,7 @@ describe('jQuery plugin', () => {
     select([el]).countdown({ date: inFuture(5 * DAY), refresh: 0 });
 
     const c = jq.data(el, 'countdown') as Countdown;
-    expect(c.getDiffDate().days).toBe(5);
+    expect(c.getDiffDate().days).toBe(2);
   });
 
   it('does not stack instances on re-invocation', () => {

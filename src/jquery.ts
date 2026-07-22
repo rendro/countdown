@@ -48,10 +48,13 @@ export function registerJQueryPlugin($?: unknown): void {
         continue;
       }
 
-      // `data-date` on the element wins only when no date was passed in
+      // `data-date` wins over the options object, as in 2.x — that ordering
+      // is what lets one call configure many elements with per-element dates.
+      // Unlike 2.x we copy rather than mutate the caller's options, which
+      // otherwise leaked the first element's date onto every later one.
       const dataDate = el.dataset?.date;
       const merged: TUserOptions = { ...options };
-      if (merged.date === undefined && dataDate) {
+      if (dataDate) {
         merged.date = dataDate;
       }
 
