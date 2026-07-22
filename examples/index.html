@@ -33,6 +33,14 @@
           $(this).removeClass('ended').data('countdown').update(+(new Date) + 10000).start();
         });
 
+        $('.countdown.decimal').countdown({
+          date: +(new Date) + 30000,
+          refresh: 50,
+          render: function(data) {
+            $(this.el).text(this.leadingZeros(data.sec + data.millisec / 1000, 2, 2) + " sec");
+          }
+        });
+
         // End time for diff purposes
         var endTimeDiff = new Date().getTime() + 15000;
         // This is server's time
@@ -83,6 +91,10 @@
       <p>Click on the green box to reset the counter to 10 sec.</p>
       <div class="countdown callback"></div>
       
+      <h2>Decimal seconds</h2>
+      <p>Fractional seconds via <code>leadingZeros(value, 2, 2)</code> and a 50ms refresh.</p>
+      <div class="countdown decimal"></div>
+
       <h2>Countdown with offset</h2>
       <p class="offset-notice"></p>
       <div class="offset-server">Countdown according to server time: 

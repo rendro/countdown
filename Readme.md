@@ -106,6 +106,23 @@ new Countdown(el, { date: 'nonsense' });
 `this.running` and `this.leadingZeros()` are available inside them. Arrow
 functions keep their own `this`, as usual.
 
+### Decimal seconds
+
+`leadingZeros` takes an optional third argument for decimal places. Only the
+integer part is padded, so the field width does not jitter as the fraction
+ticks:
+
+```js
+render(diff) {
+  this.el.textContent =
+    this.leadingZeros(diff.sec + diff.millisec / 1000, 2, 2) + ' sec';
+  // "07.35 sec"
+}
+```
+
+Pair it with a small `refresh` — `refresh: 50` or so — otherwise the decimals
+only move once a second.
+
 ### The diff object
 
 `render` receives, and `getDiffDate()` returns:
@@ -123,12 +140,12 @@ functions keep their own `this`, as usual.
 | `start()` | Start ticking. Idempotent — it will not stack intervals |
 | `stop()` | Stop ticking, leaving the last output in place |
 | `restart(options)` | Apply new options and start again |
-| `update(date)` | Point at a new date and re-render |
+| `update(date)` | Point at a new date and re-render. Call `start()` afterwards to resume ticking if it had already finished |
 | `updateOffset(ms)` | Adjust the offset |
 | `render()` | Render once, now |
 | `destroy()` | Stop ticking and release the element |
 | `getDiffDate()` | The remaining time. Has no side effects |
-| `leadingZeros(num, length?)` | Pad a number with zeros. Defaults to length 2 |
+| `leadingZeros(num, length?, fractionDigits?)` | Pad with zeros; optionally keep decimal places |
 | `running` / `finished` | Getters for the current state |
 | `options` / `el` | The resolved options and the host element |
 
@@ -152,6 +169,7 @@ Run `npm run build`, then open `examples/index.html` in a browser.
 - `millisec` is now `0`–`999`. It used to be a fraction of a second times 1000.
 - The diff object gained `total`.
 - Invalid dates throw instead of rendering zeros.
+- `leadingZeros` gained a third argument for decimal places.
 - New: `destroy()`, `finished`, `running`, and TypeScript types.
 
 ### Fixed in 3.0

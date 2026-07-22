@@ -21,7 +21,7 @@ export interface ICountdownContext {
   readonly el: HTMLElement;
   readonly options: TOptions;
   readonly running: boolean;
-  leadingZeros(num: number, length?: number): string;
+  leadingZeros(num: number, length?: number, fractionDigits?: number): string;
 }
 
 export type TOptions = {

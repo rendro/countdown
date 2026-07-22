@@ -340,6 +340,41 @@ describe('Countdown', () => {
       expect(c.getDiffDate().days).toBe(2);
     });
 
+    it('keeps callbacks bound to the instance, and does not re-wrap them', () => {
+      const el = createEl();
+      const seen: unknown[] = [];
+      const c = new Countdown(el, {
+        date: inFuture(DAY),
+        refresh: 0,
+        render() {
+          seen.push(this.el);
+        },
+      });
+
+      const firstRender = c.options.render;
+      for (let i = 0; i < 50; i++) c.restart({ date: inFuture(DAY) });
+
+      // still the caller's function, bound once — not 51 nested wrappers
+      expect(c.options.render).not.toBe(firstRender);
+      expect(seen).toHaveLength(51);
+      expect(seen.every((v) => v === el)).toBe(true);
+    });
+
+    it('carries callbacks forward when restart omits them', () => {
+      const render = vi.fn();
+      const c = new Countdown(createEl(), {
+        date: inFuture(DAY),
+        refresh: 0,
+        render,
+      });
+      render.mockClear();
+
+      c.restart({ offset: 10 });
+
+      expect(render).toHaveBeenCalledTimes(1);
+      expect(c.options.offset).toBe(10);
+    });
+
     it('revives a finished countdown', () => {
       const c = new Countdown(createEl(), {
         date: new Date(NOW.getTime() - SEC),
@@ -369,6 +404,24 @@ describe('Countdown', () => {
 
       expect(render).toHaveBeenCalledTimes(1);
       expect(c.getDiffDate().days).toBe(2);
+    });
+
+    it('re-renders a finished countdown but does not resume ticking on its own', () => {
+      // documented behaviour: call start() to resume, as the example does
+      const c = new Countdown(createEl(), {
+        date: new Date(NOW.getTime() - SEC),
+        refresh: 100,
+        render: () => undefined,
+      });
+      expect(c.finished).toBe(true);
+
+      c.update(inFuture(DAY));
+
+      expect(c.finished).toBe(false);
+      expect(c.running).toBe(false);
+
+      c.start();
+      expect(c.running).toBe(true);
     });
 
     it('update rejects an invalid date', () => {
@@ -459,6 +512,42 @@ describe('Countdown', () => {
       const c = new Countdown(createEl(), { date: inFuture(DAY), refresh: 0 });
       expect(c.leadingZeros(7, 4)).toBe('0007');
       expect(c.leadingZeros(123456, 2)).toBe('123456');
+    });
+
+    // #25 — `leadingZeros(sec).toFixed(2)` cannot work, it returns a string
+    describe('decimal seconds (#25)', () => {
+      const chart = () =>
+        new Countdown(createEl(), { date: inFuture(DAY), refresh: 0 });
+
+      it('keeps decimal places when asked', () => {
+        expect(chart().leadingZeros(15, 2, 2)).toBe('15.00');
+        expect(chart().leadingZeros(7.354, 2, 2)).toBe('07.35');
+      });
+
+      it('pads only the integer part, so the width stays stable', () => {
+        expect(chart().leadingZeros(7.5, 2, 1)).toBe('07.5');
+        expect(chart().leadingZeros(7.5, 4, 1)).toBe('0007.5');
+      });
+
+      it('rounds to the requested precision', () => {
+        expect(chart().leadingZeros(9.999, 2, 2)).toBe('10.00');
+      });
+
+      it('is unchanged when fractionDigits is omitted or zero', () => {
+        expect(chart().leadingZeros(15)).toBe('15');
+        expect(chart().leadingZeros(15, 2, 0)).toBe('15');
+      });
+
+      it('renders fractional seconds from a real diff', () => {
+        const c = new Countdown(createEl(), {
+          date: inFuture(15 * SEC + 250),
+          refresh: 0,
+          render: () => undefined,
+        });
+        const d = c.getDiffDate();
+
+        expect(c.leadingZeros(d.sec + d.millisec / 1000, 2, 2)).toBe('15.25');
+      });
     });
   });
 

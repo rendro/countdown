@@ -22,6 +22,9 @@ dependencies — jQuery is optional.
 * `destroy()`, and `running` / `finished` getters.
 * `total` on the diff object — whole milliseconds remaining.
 * `$('…').countdown('destroy')` and `registerJQueryPlugin($)`.
+* `leadingZeros(num, length, fractionDigits)` — decimal places, padding only
+  the integer part so the field width stays stable. The obvious approach,
+  `leadingZeros(sec).toFixed(2)`, could never work: it returns a string. (#25)
 
 ### Fixed
 * `onEnd` never fired when the target date was already in the past, or when
@@ -35,6 +38,8 @@ dependencies — jQuery is optional.
 * An unparseable date rendered as all zeros, indistinguishable from a finished
   countdown. It now throws with a message naming the value and pointing at
   ISO 8601. (#32)
+* `restart()` re-bound already-bound callbacks, nesting another wrapper on
+  every call. Binding now happens against the caller's original function.
 
 ## Version 2.2.0
 * Added restart API method

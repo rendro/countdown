@@ -61,8 +61,6 @@ export function toDate(value: TDateInput): Date {
   return date;
 }
 
-const FUNCTION_KEYS = ['onEnd', 'render'] as const;
-
 export class Countdown {
   readonly el: HTMLElement;
 
@@ -70,6 +68,16 @@ export class Countdown {
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private ended = false;
+
+  /**
+   * The callbacks as the caller wrote them. Binding happens against these, so
+   * repeated `restart()` calls re-bind the original rather than wrapping an
+   * already-bound function again and again.
+   */
+  private rawCallbacks: Pick<TOptions, 'onEnd' | 'render'> = {
+    onEnd: defaultOptions.onEnd,
+    render: defaultOptions.render,
+  };
 
   constructor(el: HTMLElement, userOptions: TUserOptions = {}) {
     if (!el) {
@@ -92,12 +100,14 @@ export class Countdown {
     merged.date = toDate((user.date ?? base.date) as TDateInput);
 
     // bind function options so `this.el` works inside them, as 2.x did
-    for (const key of FUNCTION_KEYS) {
-      const fn = merged[key];
-      if (typeof fn === 'function') {
-        (merged as Record<string, unknown>)[key] = fn.bind(this);
-      }
+    if (typeof user.render === 'function') {
+      this.rawCallbacks.render = user.render as TOptions['render'];
     }
+    if (typeof user.onEnd === 'function') {
+      this.rawCallbacks.onEnd = user.onEnd as TOptions['onEnd'];
+    }
+    merged.render = this.rawCallbacks.render.bind(this);
+    merged.onEnd = this.rawCallbacks.onEnd.bind(this);
 
     return merged;
   }
@@ -147,9 +157,23 @@ export class Countdown {
     return { years, days, hours, min, sec, millisec: remaining, total };
   }
 
-  /** Pad a number with leading zeros. */
-  leadingZeros(num: number, length = 2): string {
-    return String(num).padStart(length, '0');
+  /**
+   * Pad a number with leading zeros, optionally keeping decimal places.
+   *
+   * Only the integer part is padded, so the field width stays stable as the
+   * fraction ticks. `fractionDigits` exists because the obvious approach —
+   * `leadingZeros(sec).toFixed(2)` — cannot work: this returns a string.
+   *
+   * ```js
+   * this.leadingZeros(7);                              // "07"
+   * this.leadingZeros(diff.sec + diff.millisec / 1000, 2, 2); // "07.35"
+   * ```
+   */
+  leadingZeros(num: number, length = 2, fractionDigits = 0): string {
+    const text = fractionDigits > 0 ? num.toFixed(fractionDigits) : String(num);
+    const [integer, fraction] = text.split('.');
+    const padded = integer.padStart(length, '0');
+    return fraction === undefined ? padded : `${padded}.${fraction}`;
   }
 
   /**
