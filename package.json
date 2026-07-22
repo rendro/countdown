@@ -1,44 +1,70 @@
 {
   "name": "easy-countdown",
-  "version": "2.2.0",
   "description": "Simple, lightweight and easy to use countdown plugin",
-  "main": "src/countdown.js",
-  "scripts": {
-    "prepublish": "npm run build",
-    "build": "npm run build-vanilla && npm run minify-vanilla && npm run build-jquery && npm run minify-jquery",
-    "build-vanilla": "browserify -s Countdown -e src/countdown.js -o dest/countdown.js",
-    "build-jquery": "browserify -s Countdown -e src/jquery-wrapper.js -o dest/jquery.countdown.js",
-    "minify-vanilla": "uglifyjs dest/countdown.js > dest/countdown.min.js",
-    "minify-jquery": "uglifyjs dest/jquery.countdown.js > dest/jquery.countdown.min.js"
+  "keywords": [
+    "countdown",
+    "timer",
+    "clock",
+    "jquery",
+    "plugin"
+  ],
+  "license": "MIT",
+  "version": "3.0.0",
+  "author": {
+    "name": "Robert Fleischmann",
+    "email": "rendro87@gmail.com",
+    "url": "https://robert-fleischmann.com"
   },
+  "type": "module",
+  "main": "./dist/countdown.cjs",
+  "module": "./dist/countdown.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/countdown.mjs"
+      },
+      "require": {
+        "types": "./types/cjs.d.cts",
+        "default": "./dist/countdown.cjs"
+      }
+    },
+    "./jquery": {
+      "import": {
+        "types": "./dist/jquery.d.ts",
+        "default": "./dist/jquery.countdown.mjs"
+      },
+      "require": {
+        "types": "./types/jquery.d.cts",
+        "default": "./dist/jquery.countdown.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "types"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/rendro/countdown.git"
   },
-  "keywords": [
-    "countdown",
-    "timer",
-    "jQuery",
-    "plugin"
-  ],
-  "author": "Robert Fleischmann <me@robert-fleischmann.de>",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/mit-license.php"
-    },
-    {
-      "type": "GPL",
-      "url": "http://www.opensource.org/licenses/gpl-license.php"
-    }
-  ],
   "bugs": {
     "url": "https://github.com/rendro/countdown/issues"
   },
   "homepage": "https://github.com/rendro/countdown",
+  "scripts": {
+    "build": "vite build && vite build --mode umd && vite build --mode umd-min && vite build --mode jquery && vite build --mode jquery-umd && vite build --mode jquery-umd-min && tsc",
+    "typecheck": "tsc -p tsconfig.check.json",
+    "test": "vitest run",
+    "verify:package": "./scripts/verify-package.sh",
+    "test:watch": "vitest"
+  },
   "devDependencies": {
-    "bower": "1.3.12",
-    "browserify": "6.0.3",
-    "uglify-js": "2.4.15"
+    "jsdom": "^25.0.1",
+    "typescript": "^5.6.3",
+    "vite": "^7.3.6",
+    "vitest": "^3.2.7"
   }
 }
